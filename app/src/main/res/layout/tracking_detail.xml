@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:textStyle="normal"
+                android:textSize="12sp"
+                android:textColor="#aaaaaa"
+                android:id="@+id/date"
+                android:text="0000-00-00"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="42dp"
+                android:padding="1dp"
+                android:background="#aaaaaa"
+                android:textStyle="normal"
+                android:textSize="10sp"
+                android:textColor="#ffffff"
+                android:text="D+"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="16dp"
+                android:textStyle="normal"
+                android:textSize="12sp"
+                android:textColor="#aaaaaa"
+                android:id="@+id/time"
+                android:text="time"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="#212121"
+                android:id="@+id/state"
+                android:text="state"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:textStyle="normal"
+                android:textSize="12sp"
+                android:textColor="#212121"
+                android:id="@+id/where"
+                android:text="where"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

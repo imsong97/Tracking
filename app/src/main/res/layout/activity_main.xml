@@ -34,7 +34,7 @@
                     android:textSize="30sp"
                     android:textColor="#212121"
                     android:textStyle="normal"
-                    android:text="배달상태"/>
+                    android:text="Status"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,6 +75,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:id="@+id/itemName"
                                 android:text="상품명"
                                 android:textStyle="normal"
                                 android:textSize="16sp"
@@ -83,7 +84,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="18dp"
-                                android:id="@+id/purchaseItemDate"
+                                android:id="@+id/regDate"
                                 android:text="등록일"
                                 android:textStyle="normal"
                                 android:textSize="12sp"
@@ -118,6 +119,7 @@
                         android:textStyle="normal"
                         android:textSize="14sp"
                         android:textColor="#212121"
+                        android:id="@+id/companyName"
                         android:text="택배사명"/>
                 </LinearLayout>
 
@@ -142,6 +144,7 @@
                         android:textStyle="normal"
                         android:textSize="14sp"
                         android:textColor="#212121"
+                        android:id="@+id/invoice"
                         android:text="number"/>
                 </LinearLayout>
 
