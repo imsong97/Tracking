@@ -1,16 +1,15 @@
 package com.yunho.tracking
 
 import android.content.Context
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.yunho.tracking.databinding.TrackingDetailBinding
-import com.yunho.tracking.domain.model.TrackingData
+import com.yunho.tracking.data.model.TrackingDataEntity
 
-class TrackingAdapter(private val detail: List<TrackingData.Detail>): RecyclerView.Adapter<TrackingAdapter.ViewHolder>() {
+class TrackingAdapter(private val detail: List<TrackingDataEntity.Detail>): RecyclerView.Adapter<TrackingAdapter.ViewHolder>() {
 
     private lateinit var context: Context
 
@@ -30,7 +29,7 @@ class TrackingAdapter(private val detail: List<TrackingData.Detail>): RecyclerVi
                 b = false
             }
         }
-        
+
         val data = detail[i]
         holder.bind(data, b)
     }
@@ -38,7 +37,7 @@ class TrackingAdapter(private val detail: List<TrackingData.Detail>): RecyclerVi
     override fun getItemCount(): Int  = detail.size
 
     inner class ViewHolder(private val binding: TrackingDetailBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(data: TrackingData.Detail, b: Boolean){
+        fun bind(data: TrackingDataEntity.Detail, b: Boolean){
 //            binding.date.text = format("date", data.time!!)
             if (!b){
                 binding.date.visibility = View.INVISIBLE

@@ -1,10 +1,11 @@
 package com.yunho.tracking.data
 
-import com.yunho.tracking.domain.model.TrackingData
+import android.content.Context
+import com.yunho.tracking.data.model.TrackingDataEntity
 import io.reactivex.Single
-import retrofit2.Response
 
 interface GetTrackingDataSource {
 
-    fun getTrackingData(): Single<Response<TrackingData>>?
+    fun getTrackingData(context: Context): Single<TrackingDataEntity>?
+
 }

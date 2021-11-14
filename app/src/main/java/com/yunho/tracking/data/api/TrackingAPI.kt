@@ -1,6 +1,6 @@
 package com.yunho.tracking.data.api
 
-import com.yunho.tracking.domain.model.TrackingData
+import com.yunho.tracking.data.model.TrackingDataEntity
 import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -36,6 +36,6 @@ class TrackingAPI {
 
     interface API{
         @GET("mobile.json")
-        fun getTrackingData(): Single<Response<TrackingData>>
+        fun getTrackingData(): Single<Response<TrackingDataEntity>>
     }
 }

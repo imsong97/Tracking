@@ -1,16 +1,16 @@
 package com.yunho.tracking.presentation
 
-import com.yunho.tracking.domain.model.TrackingData
+import android.content.Context
+import com.yunho.tracking.data.model.TrackingDataEntity
 import io.reactivex.Single
-import retrofit2.Response
 
 interface Contract {
 
     interface View{
-
+        fun getContext(): Context
     }
 
     interface Presenter{
-        fun getTrackingData(): Single<TrackingData>?
+        fun getTrackingData(): Single<TrackingDataEntity>?
     }
 }

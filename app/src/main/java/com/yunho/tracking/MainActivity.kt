@@ -1,5 +1,6 @@
 package com.yunho.tracking
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -7,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yunho.tracking.databinding.ActivityMainBinding
-import com.yunho.tracking.domain.model.TrackingData
+import com.yunho.tracking.data.model.TrackingDataEntity
 import com.yunho.tracking.presentation.Contract
 import com.yunho.tracking.presentation.Presenter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity(), Contract.View {
                 {
                     it.printStackTrace()
                     println("Error")
+                    // alert
                 }
             )
     }
@@ -61,16 +63,22 @@ class MainActivity : AppCompatActivity(), Contract.View {
         return form.format(System.currentTimeMillis())
     }
 
-    private fun getState(data: List<TrackingData.Detail>?): String{
+    private fun getState(data: List<TrackingDataEntity.Detail>?): String{
         return data?.get(data.size -1)?.status.toString()
     }
 
-    private fun setAdapter(data: List<TrackingData.Detail>?){
+    private fun setAdapter(data: List<TrackingDataEntity.Detail>?){
         val adapter = TrackingAdapter(data!!)
         recyclerView.adapter = adapter
     }
 
+    override fun getContext(): Context = this
+
     override fun onDestroy() {
         super.onDestroy()
+
+        if (disposable!= null && !disposable!!.isDisposed){
+            disposable!!.dispose()
+        }
     }
 }

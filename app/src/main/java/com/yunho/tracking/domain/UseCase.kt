@@ -1,13 +1,11 @@
 package com.yunho.tracking.domain
 
-import com.yunho.tracking.domain.model.TrackingData
+import com.yunho.tracking.data.model.TrackingDataEntity
 import io.reactivex.Single
-import org.json.JSONObject
-import retrofit2.Response
 
 class UseCase(private val repository: Repository) {
 
-    fun getTrackingData(): Single<TrackingData>?{
+    fun getTrackingData(): Single<TrackingDataEntity>?{
         return repository.getDataFromRemote()
     }
 }
