@@ -1,10 +1,11 @@
 package com.yunho.tracking.domain
 
 import com.yunho.tracking.data.model.TrackingDataEntity
+import com.yunho.tracking.domain.model.TrackingData
 import io.reactivex.Single
 
 interface Repository {
 
-    fun getDataFromRemote(): Single<TrackingDataEntity>?
-    fun getDataFromLocal(): Single<TrackingDataEntity>?
+    fun getTrackingDataFromRemote(): Single<TrackingData>?
+    fun getTrackingDataFromLocal(): Single<TrackingData>?
 }

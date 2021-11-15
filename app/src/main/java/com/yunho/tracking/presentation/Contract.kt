@@ -2,6 +2,7 @@ package com.yunho.tracking.presentation
 
 import android.content.Context
 import com.yunho.tracking.data.model.TrackingDataEntity
+import com.yunho.tracking.domain.model.TrackingData
 import io.reactivex.Single
 
 interface Contract {
@@ -11,6 +12,7 @@ interface Contract {
     }
 
     interface Presenter{
-        fun getTrackingData(): Single<TrackingDataEntity>?
+        fun getDataFromRemote(): Single<TrackingData>?
+        fun getDataFromLocal(): Single<TrackingData>?
     }
 }

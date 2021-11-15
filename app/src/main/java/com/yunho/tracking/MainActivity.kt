@@ -1,6 +1,8 @@
 package com.yunho.tracking
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity(), Contract.View {
         recyclerView = detail
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        disposable = presenter.getTrackingData()
+        disposable = presenter.getDataFromRemote()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe (
@@ -52,8 +54,7 @@ class MainActivity : AppCompatActivity(), Contract.View {
                 },
                 {
                     it.printStackTrace()
-                    println("Error")
-                    // alert
+                    showErrorDialog()
                 }
             )
     }
@@ -70,6 +71,14 @@ class MainActivity : AppCompatActivity(), Contract.View {
     private fun setAdapter(data: List<TrackingDataEntity.Detail>?){
         val adapter = TrackingAdapter(data!!)
         recyclerView.adapter = adapter
+    }
+
+    private fun showErrorDialog() {
+        val dialog = AlertDialog.Builder(this)
+        dialog.setMessage("No Data in Local !!!")
+            .setPositiveButton("확인") { _: DialogInterface?, _: Int -> finish() }
+            .create()
+            .show()
     }
 
     override fun getContext(): Context = this
