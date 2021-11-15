@@ -23,24 +23,25 @@ class TrackingAdapter(private val detail: List<TrackingDataEntity.Detail>): Recy
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var i = detail.size - 1 - position
-        var b = true
+        var i = itemCount - 1 - position
+        var v = true
 
         if (position != 0){
-            b = visible(i)
+            v = visible(i)
         }
 
         val data = detail[i]
-        holder.bind(data, b)
+        holder.bind(data, v)
     }
 
     override fun getItemCount(): Int  = detail.size
 
     inner class ViewHolder(private val binding: TrackingDetailBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(data: TrackingDataEntity.Detail, b: Boolean){
+
+        fun bind(data: TrackingDataEntity.Detail, visible: Boolean){
             binding.date.text = format("date", data.time!!)
             binding.during.visibility = View.INVISIBLE
-            if (!b){
+            if (!visible){
                 binding.date.visibility = View.INVISIBLE
             }
             binding.time.text = format("time", data.time!!)
