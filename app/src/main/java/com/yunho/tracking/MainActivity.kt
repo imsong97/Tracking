@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +15,7 @@ import com.yunho.tracking.databinding.ActivityMainBinding
 import com.yunho.tracking.data.model.TrackingDataEntity
 import com.yunho.tracking.presentation.Contract
 import com.yunho.tracking.presentation.Presenter
+import com.yunho.tracking.presentation.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -25,6 +28,14 @@ class MainActivity : AppCompatActivity(), Contract.View {
     private lateinit var binding: ActivityMainBinding
     private var disposable: Disposable? = null
     private lateinit var recyclerView: RecyclerView
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
