@@ -8,6 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.yunho.tracking.databinding.TrackingDetailBinding
 import com.yunho.tracking.data.model.TrackingDataEntity
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 
 class TrackingAdapter(private val detail: List<TrackingDataEntity.Detail>): RecyclerView.Adapter<TrackingAdapter.ViewHolder>() {
 
@@ -25,9 +27,7 @@ class TrackingAdapter(private val detail: List<TrackingDataEntity.Detail>): Recy
         var b = true
 
         if (position != 0){
-            if (detail[i+1].time == detail[i].time){
-                b = false
-            }
+            b = visible(i)
         }
 
         val data = detail[i]
@@ -38,21 +38,27 @@ class TrackingAdapter(private val detail: List<TrackingDataEntity.Detail>): Recy
 
     inner class ViewHolder(private val binding: TrackingDetailBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(data: TrackingDataEntity.Detail, b: Boolean){
-//            binding.date.text = format("date", data.time!!)
+            binding.date.text = format("date", data.time!!)
+            binding.during.visibility = View.INVISIBLE
             if (!b){
                 binding.date.visibility = View.INVISIBLE
             }
+            binding.time.text = format("time", data.time!!)
             binding.state.text = data.status
             binding.where.text = data.where
         }
+    }
 
-        private fun format(s: String, data: String): String{
+    private fun visible(i: Int): Boolean = format("date", detail[i+1].time!!) != format("date", detail[i].time!!)
 
-//            when(s){
-//                "date" ->
-//                "time" ->
-//            }
-            return ""
+    private fun format(s: String, data: String): String{
+        val str = data.split(" ")
+
+        return if (s == "date"){
+            str[0]
+        }
+        else {
+            str[1]
         }
     }
 }

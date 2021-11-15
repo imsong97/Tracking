@@ -34,6 +34,7 @@
                 android:padding="1dp"
                 android:background="#aaaaaa"
                 android:textStyle="normal"
+                android:id="@+id/during"
                 android:textSize="10sp"
                 android:textColor="#ffffff"
                 android:text="D+"/>
