@@ -8,24 +8,15 @@ import com.yunho.tracking.domain.model.TrackingData
 object TrackingDataMapper {
 
     fun mapToTrackingData(data: TrackingDataEntity): TrackingData{
-        return TrackingData(
-            data.parcelCompanyCode,
-            data.parcelCompanyName,
-            data.parcelInvoice,
-            data.parcelLevel!!.toInt(),
-            data.parcelDeliverTime,
-            data.purchaseItemImg,
-            data.purchaseItemName,
-            data.purchaseItemDate,
-            mapToDetail(data.trackingDetail!!)
-        )
-    }
-
-    private fun mapToDetail(data: List<TrackingDataEntity.Detail>): List<TrackingData.Detail>{
         val gson = Gson()
-
-        return gson.fromJson(gson.toJson(data), Array<TrackingData.Detail>::class.java).toList() // list 형태로 변환
+        return gson.fromJson(gson.toJson(data), TrackingData::class.java)
     }
+
+//    private fun mapToDetail(data: List<TrackingDataEntity.Detail>): List<TrackingData.Detail>{
+//        val gson = Gson()
+//
+//        return gson.fromJson(gson.toJson(data), Array<TrackingData.Detail>::class.java).toList() // list 형태로 변환
+//    }
 }
 /*
 * object vs companion object

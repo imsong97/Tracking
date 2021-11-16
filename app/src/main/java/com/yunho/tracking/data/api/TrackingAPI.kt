@@ -11,15 +11,19 @@ import retrofit2.http.GET
 class TrackingAPI {
 
     private val url = "http://img.sweettracker.net/image/mobile_test/"
+    private var retrofit: Retrofit
+    var api: API
 
-    // 생성자로 처리, api 메서드 별도
-    private var retrofit: Retrofit = Retrofit.Builder()
-                                        .baseUrl(url)
-                                        .addConverterFactory(GsonConverterFactory.create()) // 서버로부터 데이터를 받고 원하는 타입으로 바꾸기 위해
-                                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // RxJava와 함께 사용 시 필수, Observable형태로 바꿔줌
-                                        .build()
+    init { // 인스턴스 생성 시 가장 먼저 호출, 기본생성자 호출 시 바로 실행
+        retrofit = Retrofit.Builder()
+                    .baseUrl(url)
+                    .addConverterFactory(GsonConverterFactory.create()) // 서버로부터 데이터를 받고 원하는 타입으로 바꾸기 위해
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // RxJava와 함께 사용 시 필수, Observable형태로 바꿔줌
+                    .build()
 
-    var api: API = retrofit.create(API::class.java) // network request
+        api = retrofit.create(API::class.java) // network request
+    }
+    // constructor{}: 보조 생성자(부 생성자), init 다음으로 실행
 
     // companion object -> class의 인스턴스 없이 접근할 수 있도록 함
     companion object {

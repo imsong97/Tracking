@@ -12,7 +12,6 @@ interface Contract {
     }
 
     interface Presenter{
-        fun getDataFromRemote(): Single<TrackingData>?
-        fun getDataFromLocal(): Single<TrackingData>?
+        fun getTrackingData(): Single<TrackingData>?
     }
 }
