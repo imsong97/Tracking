@@ -196,6 +196,18 @@
                         android:src="@mipmap/ic_copy"
                         android:onClick="@{() -> viewModel.copyText()}"
                         android:scaleType="fitCenter"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textStyle="normal"
+                        android:textSize="14sp"
+                        android:textColor="#03a9f4"
+                        android:text="더보기"/>
                 </LinearLayout>
 
                 <LinearLayout

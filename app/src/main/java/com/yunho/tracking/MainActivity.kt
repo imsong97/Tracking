@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +18,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity(), Contract.View {
 
@@ -28,14 +25,7 @@ class MainActivity : AppCompatActivity(), Contract.View {
     private lateinit var binding: ActivityMainBinding
     private var disposable: Disposable? = null
     private lateinit var recyclerView: RecyclerView
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
+    private lateinit var viewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,17 +41,22 @@ class MainActivity : AppCompatActivity(), Contract.View {
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe (
                 {
-                    tv_status.text = getState(it.trackingDetail)
-                    tv_parcelDeliverTime.text = "도착 예정 시간 : ${it.parcelDeliverTime}"
+                    val bindingData = ViewModel.BindingData(
+                        it.parcelCompanyName,
+                        it.parcelInvoice,
+                        it.parcelLevel,
+                        it.parcelDeliverTime,
+                        it.purchaseItemName,
+                        it.trackingDetail
+                    )
 
                     Glide.with(this).load(it.purchaseItemImg).into(parcelImg) // Glide -> 이미지 표시
-                    itemName.text = it.purchaseItemName
-                    regDate.text = "등록일 : ${getDate()}"
 
-                    companyName.text = it?.parcelCompanyName
-                    invoice.text = it.parcelInvoice
+                    viewModel = ViewModel(this, bindingData)
+                    binding.data = bindingData
+                    binding.viewModel = viewModel
 
-                    setAdapter(it.trackingDetail)
+                    setAdapter(it.trackingDetail!!)
                 },
                 {
                     it.printStackTrace()
@@ -69,17 +64,8 @@ class MainActivity : AppCompatActivity(), Contract.View {
             )
     }
 
-    private fun getDate(): String{
-        val form = SimpleDateFormat("yyyy-MM-dd")
-        return form.format(System.currentTimeMillis())
-    }
-
-    private fun getState(data: List<TrackingData.Detail>?): String{
-        return data?.get(data.size -1)?.status.toString()
-    }
-
-    private fun setAdapter(data: List<TrackingData.Detail>?){
-        val adapter = TrackingAdapter(data!!)
+    private fun setAdapter(data: List<TrackingData.Detail>){
+        val adapter = TrackingAdapter(data)
         recyclerView.adapter = adapter
     }
 
