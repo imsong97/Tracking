@@ -15,10 +15,39 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="#03a9f4"/>
+            android:orientation="horizontal"
+            android:background="#03a9f4">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="16dp"
+                android:src="@mipmap/ic_arrow"/>
+
+            <TextView
+                android:layout_width="74dp"
+                android:layout_height="24dp"
+                android:layout_margin="16dp"
+                android:text="배송조회"
+                android:autoSizeTextType="uniform"
+                android:textColor="#ffffff"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:src="@mipmap/ic_more"/>
+
+        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -105,7 +134,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="18dp"
+                    android:layout_height="20dp"
                     android:layout_margin="16dp"
                     android:orientation="horizontal">
                     <TextView
@@ -128,7 +157,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="18dp"
+                    android:layout_height="24dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginBottom="26dp"
@@ -136,6 +165,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:textStyle="normal"
                         android:textSize="12sp"
                         android:textColor="#aaaaaa"
@@ -143,18 +173,56 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="38dp"
                         android:textStyle="normal"
                         android:textSize="14sp"
                         android:textColor="#212121"
                         android:id="@+id/invoice"
                         android:text="number"/>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginLeft="6dp"
+                        android:id="@+id/copy"
+                        android:src="@mipmap/ic_copy"
+                        android:scaleType="fitCenter"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
                     android:background="#f0f0f0"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="9dp"
+                        android:text="배송상세"
+                        android:textStyle="normal"
+                        android:textSize="16sp"
+                        android:textColor="#212121"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="9dp"
+                        android:text="택배리뷰"
+                        android:textStyle="normal"
+                        android:textSize="14sp"
+                        android:textColor="#03a9f4"/>
+                </LinearLayout>
 
                 <!--이중 스크롤 방지 : NestedScrollView-->
                 <androidx.core.widget.NestedScrollView
