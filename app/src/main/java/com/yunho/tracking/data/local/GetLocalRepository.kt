@@ -8,8 +8,15 @@ import io.reactivex.Single
 class GetLocalRepository: LocalDataSource {
 
     override fun getTrackingData(context: Context): Single<TrackingDataEntity>? {
-        val db = AppDatabase.getInstance(context)?.userDao()
-
-        return Single.just(db?.getAll())
+        return Single.create {
+            val db = AppDatabase.getInstance(context)?.userDao()
+            val data = db?.getAll()
+            if (data != null){
+                it.onSuccess(data)
+            }
+            else{
+                it.onError(Throwable("No Data in Local"))
+            }
+        }
     }
 }
