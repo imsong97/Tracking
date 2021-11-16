@@ -7,6 +7,9 @@
         <variable
             name="viewModel"
             type="com.yunho.tracking.presentation.ViewModel" />
+        <variable
+            name="data"
+            type="com.yunho.tracking.presentation.ViewModel.BindingData" />
 
     </data>
 
@@ -25,7 +28,8 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_margin="16dp"
-                android:src="@mipmap/ic_arrow"/>
+                android:src="@mipmap/ic_arrow"
+                android:onClick="@{() -> viewModel.arrowClick()}"/>
 
             <TextView
                 android:layout_width="74dp"
@@ -66,7 +70,7 @@
                     android:textSize="30sp"
                     android:textColor="#212121"
                     android:textStyle="normal"
-                    android:text="Status"/>
+                    android:text="@{viewModel.getStatusText()}"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,14 +78,18 @@
                     android:textStyle="normal"
                     android:textSize="12sp"
                     android:textColor="#757575"
-                    android:text="도착예정시간"/>
+                    android:text="@{viewModel.getTimeText()}"/>
                 <ProgressBar
                     android:layout_width="match_parent"
                     android:layout_height="4dp"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_marginTop="54dp"
                     android:layout_marginBottom="32dp"
                     android:layout_marginLeft="48dp"
-                    android:layout_marginRight="48dp"/>
+                    android:layout_marginRight="48dp"
+                    android:max="4"
+                    android:progress="@{viewModel.setProgress()}"
+                    android:progressTint="#03a9f4"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -108,7 +116,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/itemName"
-                                android:text="상품명"
+                                android:text="@{data.purchaseItemName}"
                                 android:textStyle="normal"
                                 android:textSize="16sp"
                                 android:textColor="#212121"/>
@@ -117,7 +125,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="18dp"
                                 android:id="@+id/regDate"
-                                android:text="등록일"
+                                android:text="@{viewModel.getRegDateText()}"
                                 android:textStyle="normal"
                                 android:textSize="12sp"
                                 android:textColor="#aaaaaa"/>
@@ -152,7 +160,7 @@
                         android:textSize="14sp"
                         android:textColor="#212121"
                         android:id="@+id/companyName"
-                        android:text="택배사명"/>
+                        android:text="@{data.parcelCompanyName}"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -179,13 +187,14 @@
                         android:textSize="14sp"
                         android:textColor="#212121"
                         android:id="@+id/invoice"
-                        android:text="number"/>
+                        android:text="@{data.parcelInvoice}"/>
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginLeft="6dp"
                         android:id="@+id/copy"
                         android:src="@mipmap/ic_copy"
+                        android:onClick="@{() -> viewModel.copyText()}"
                         android:scaleType="fitCenter"/>
                 </LinearLayout>
 
