@@ -25,7 +25,7 @@ object TrackingDataMapper {
         val gson = Gson()
         val json = gson.toJson(data)
 
-        return Gson().fromJson(json, Array<TrackingData.Detail>::class.java).toList()
+        return gson.fromJson(json, Array<TrackingData.Detail>::class.java).toList()
     }
 }
 /*
