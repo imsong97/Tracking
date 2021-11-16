@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), Contract.View {
         recyclerView = detail
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        disposable = getData()
+        disposable = getData() // local vs remote
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe (
@@ -71,10 +71,10 @@ class MainActivity : AppCompatActivity(), Contract.View {
         val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val info = manager.activeNetworkInfo?.type
 
-        return if (info == ConnectivityManager.TYPE_WIFI || info == ConnectivityManager.TYPE_MOBILE){
+        return if (info == ConnectivityManager.TYPE_WIFI || info == ConnectivityManager.TYPE_MOBILE){ // 네트워크 연결 체크
             presenter.getDataFromRemote()
         } else{
-            showAlertDialog("네트워크 연결 실패")
+            showAlertDialog("network")
             presenter.getDataFromLocal()
         }
     }
@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity(), Contract.View {
     private fun showAlertDialog(s: String) {
         val dialog = AlertDialog.Builder(this)
 
-        if (s == "네트워크 연결 실패"){
-            dialog.setTitle(s)
+        if (s == "network"){
+            dialog.setTitle("네트워크 연결 실패")
                 .setMessage("\n기존 데이터를 가져옵니다")
                 .setPositiveButton("확인") { _: DialogInterface?, _: Int -> }
                 .create()

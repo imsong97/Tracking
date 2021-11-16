@@ -12,7 +12,7 @@ import com.yunho.tracking.domain.model.TrackingData
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class TrackingRepository(private val context: Context): Repository {
+class TrackingRepository(private val context: Context): Repository { // context ???
     private lateinit var db: DAO
     private val local = GetLocalRepository()
     private val remote = GetRemoteRepository()

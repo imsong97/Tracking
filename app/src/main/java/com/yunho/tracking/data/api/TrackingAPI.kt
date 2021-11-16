@@ -20,7 +20,7 @@ class TrackingAPI {
 
     var api: API = retrofit.create(API::class.java) // network request
 
-    // companion object -> class의 인스턴스 없이 접근할 수 있도록 함 (java의 static) => 싱글턴 패턴
+    // companion object -> class의 인스턴스 없이 접근할 수 있도록 함
     companion object {
         @Volatile // 접근 가능한 변수의 값을 캐시를 통해 사용하지 않고 스레드가 직접 main memory에 접근하여 읽고 씀 -> 동기화의 이유
         private var mInstance: TrackingAPI? = null

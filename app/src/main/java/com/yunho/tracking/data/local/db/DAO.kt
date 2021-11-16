@@ -10,7 +10,7 @@ interface DAO {
     fun getAll(): TrackingDataEntity
 
     @Insert
-    fun insertAll(vararg data: TrackingDataEntity)
+    fun insertAll(data: TrackingDataEntity)
 
     @Update
     fun update(data: TrackingDataEntity)
