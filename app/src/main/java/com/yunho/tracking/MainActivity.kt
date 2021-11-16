@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yunho.tracking.databinding.ActivityMainBinding
-import com.yunho.tracking.data.model.TrackingDataEntity
+import com.yunho.tracking.domain.model.TrackingData
 import com.yunho.tracking.presentation.Contract
 import com.yunho.tracking.presentation.Presenter
 import com.yunho.tracking.presentation.ViewModel
@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity(), Contract.View {
                 },
                 {
                     it.printStackTrace()
-                    showErrorDialog()
                 }
             )
     }
@@ -75,11 +74,11 @@ class MainActivity : AppCompatActivity(), Contract.View {
         return form.format(System.currentTimeMillis())
     }
 
-    private fun getState(data: List<TrackingDataEntity.Detail>?): String{
+    private fun getState(data: List<TrackingData.Detail>?): String{
         return data?.get(data.size -1)?.status.toString()
     }
 
-    private fun setAdapter(data: List<TrackingDataEntity.Detail>?){
+    private fun setAdapter(data: List<TrackingData.Detail>?){
         val adapter = TrackingAdapter(data!!)
         recyclerView.adapter = adapter
     }

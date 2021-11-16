@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.yunho.tracking.databinding.TrackingDetailBinding
-import com.yunho.tracking.data.model.TrackingDataEntity
-import java.text.SimpleDateFormat
-import java.time.LocalDate
+import com.yunho.tracking.domain.model.TrackingData
 
-class TrackingAdapter(private val detail: List<TrackingDataEntity.Detail>): RecyclerView.Adapter<TrackingAdapter.ViewHolder>() {
+class TrackingAdapter(private val detail: List<TrackingData.Detail>): RecyclerView.Adapter<TrackingAdapter.ViewHolder>() {
 
     private lateinit var context: Context
 
@@ -38,7 +36,7 @@ class TrackingAdapter(private val detail: List<TrackingDataEntity.Detail>): Recy
 
     inner class ViewHolder(private val binding: TrackingDetailBinding): RecyclerView.ViewHolder(binding.root){
 
-        fun bind(data: TrackingDataEntity.Detail, visible: Boolean){
+        fun bind(data: TrackingData.Detail, visible: Boolean){
             binding.date.text = format("date", data.time!!)
             binding.during.visibility = View.INVISIBLE
             if (!visible){

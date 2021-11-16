@@ -1,5 +1,7 @@
 package com.yunho.tracking.data.mapper
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.yunho.tracking.data.model.TrackingDataEntity
 import com.yunho.tracking.domain.model.TrackingData
 
@@ -15,8 +17,15 @@ object TrackingDataMapper {
             data.purchaseItemImg,
             data.purchaseItemName,
             data.purchaseItemDate,
-            data.trackingDetail
+            mapToDetail(data.trackingDetail!!)
         )
+    }
+
+    private fun mapToDetail(data: List<TrackingDataEntity.Detail>): List<TrackingData.Detail>{
+        val gson = Gson()
+        val json = gson.toJson(data)
+
+        return Gson().fromJson(json, Array<TrackingData.Detail>::class.java).toList()
     }
 }
 /*
