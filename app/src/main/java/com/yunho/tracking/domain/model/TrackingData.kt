@@ -5,7 +5,7 @@ data class TrackingData(
     var parcelCompanyCode: String? = null,
     var parcelCompanyName: String? = null,
     var parcelInvoice: String? = null,
-    var parcelLevel: String? = null,
+    var parcelLevel: Int? = null,
     var parcelDeliverTime: String? = null,
     var purchaseItemImg: String? = null,
     var purchaseItemName: String? = null,

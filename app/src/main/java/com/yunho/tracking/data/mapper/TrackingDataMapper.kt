@@ -12,7 +12,7 @@ object TrackingDataMapper {
             data.parcelCompanyCode,
             data.parcelCompanyName,
             data.parcelInvoice,
-            data.parcelLevel,
+            data.parcelLevel!!.toInt(),
             data.parcelDeliverTime,
             data.purchaseItemImg,
             data.purchaseItemName,
@@ -23,9 +23,8 @@ object TrackingDataMapper {
 
     private fun mapToDetail(data: List<TrackingDataEntity.Detail>): List<TrackingData.Detail>{
         val gson = Gson()
-        val json = gson.toJson(data)
 
-        return gson.fromJson(json, Array<TrackingData.Detail>::class.java).toList()
+        return gson.fromJson(gson.toJson(data), Array<TrackingData.Detail>::class.java).toList() // list 형태로 변환
     }
 }
 /*
