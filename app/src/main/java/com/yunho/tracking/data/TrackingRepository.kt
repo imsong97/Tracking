@@ -17,6 +17,7 @@ class TrackingRepository(private val context: Context): Repository { // context 
     private val local = GetLocalRepository()
     private val remote = GetRemoteRepository()
 
+    // 메서드 하나로 -> 내부에서 1.local vs 2.remote
     override fun getTrackingDataFromRemote(): Single<TrackingData>?{
         return remote.getTrackingData()
             ?.flatMap {

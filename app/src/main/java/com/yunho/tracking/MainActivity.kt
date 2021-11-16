@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), Contract.View {
 
+    // lateinit vs ? vs lazy
     private lateinit var presenter: Presenter
     private lateinit var binding: ActivityMainBinding
     private var disposable: Disposable? = null

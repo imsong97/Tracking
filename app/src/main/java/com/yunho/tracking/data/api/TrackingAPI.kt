@@ -12,6 +12,7 @@ class TrackingAPI {
 
     private val url = "http://img.sweettracker.net/image/mobile_test/"
 
+    // 생성자로 처리, api 메서드 별도
     private var retrofit: Retrofit = Retrofit.Builder()
                                         .baseUrl(url)
                                         .addConverterFactory(GsonConverterFactory.create()) // 서버로부터 데이터를 받고 원하는 타입으로 바꾸기 위해

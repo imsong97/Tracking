@@ -1,5 +1,6 @@
 package com.yunho.tracking.presentation
 
+
 import android.app.AlertDialog
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -19,6 +20,7 @@ class ViewModel(private val view: MainActivity, private val trackingData: Bindin
 
     fun getRegDateText(): String = "등록일 : ${getDate()}"
 
+    // android 종속성 제거
     fun copyText(){
         val clipboard = view.getContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip: ClipData = ClipData.newPlainText("Invoice", trackingData.parcelInvoice)
@@ -32,6 +34,7 @@ class ViewModel(private val view: MainActivity, private val trackingData: Bindin
             .show()
     }
 
+    // android 종속성 제거
     fun arrowClick(){
         val dialog = AlertDialog.Builder(view.getContext())
         dialog.setTitle("앱 종료")
