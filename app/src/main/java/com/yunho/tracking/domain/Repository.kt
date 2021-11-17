@@ -6,6 +6,5 @@ import io.reactivex.Single
 
 interface Repository {
 
-    fun getTrackingDataFromRemote(): Single<TrackingData>?
-    fun getTrackingDataFromLocal(): Single<TrackingData>?
+    fun getTrackingData(): Single<TrackingData>?
 }

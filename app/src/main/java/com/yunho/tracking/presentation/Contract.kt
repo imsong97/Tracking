@@ -1,8 +1,8 @@
 package com.yunho.tracking.presentation
 
 import android.content.Context
-import com.yunho.tracking.data.model.TrackingDataEntity
 import com.yunho.tracking.domain.model.TrackingData
+import com.yunho.tracking.domain.ViewModel
 import io.reactivex.Single
 
 interface Contract {

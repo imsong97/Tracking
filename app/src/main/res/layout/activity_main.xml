@@ -6,10 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.yunho.tracking.presentation.ViewModel" />
+            type="com.yunho.tracking.domain.ViewModel" />
         <variable
             name="data"
-            type="com.yunho.tracking.presentation.ViewModel.BindingData" />
+            type="com.yunho.tracking.domain.model.TrackingData" />
+        <variable
+            name="view"
+            type="com.yunho.tracking.MainActivity" />
 
     </data>
 
@@ -29,7 +32,7 @@
                 android:layout_height="24dp"
                 android:layout_margin="16dp"
                 android:src="@mipmap/ic_arrow"
-                android:onClick="@{() -> viewModel.arrowClick()}"/>
+                android:id="@+id/leftArrow"/>
 
             <TextView
                 android:layout_width="74dp"
@@ -194,7 +197,6 @@
                         android:layout_marginLeft="6dp"
                         android:id="@+id/copy"
                         android:src="@mipmap/ic_copy"
-                        android:onClick="@{() -> viewModel.copyText()}"
                         android:scaleType="fitCenter"/>
                     <View
                         android:layout_width="0dp"

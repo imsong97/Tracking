@@ -1,9 +1,10 @@
 package com.yunho.tracking
 
 import android.app.AlertDialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.DialogInterface
-import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -14,8 +15,7 @@ import com.yunho.tracking.databinding.ActivityMainBinding
 import com.yunho.tracking.domain.model.TrackingData
 import com.yunho.tracking.presentation.Contract
 import com.yunho.tracking.presentation.Presenter
-import com.yunho.tracking.presentation.ViewModel
-import io.reactivex.Single
+import com.yunho.tracking.domain.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -23,7 +23,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), Contract.View {
 
-    // lateinit vs ? vs lazy
+    /*
+    * ?: null이 될 수 있음을 명시적으로 표현
+    * lateinit: null로 선언할 필요 없을 경우 / val 사용 불가능 / Int, Boolean, Double 등의 기본적인 타입에 적용 불가능 / .isInitialized 로 초기화 체크 가능
+    * lazy{}: null로 선언할 필요 없을 경우 / var 사용 불가능 / 블록 안에서 필요한 코드 작성, 이후 .start()로 호출(초기화)
+    * */
     private lateinit var presenter: Presenter
     private lateinit var binding: ActivityMainBinding
     private var disposable: Disposable? = null
@@ -39,23 +43,33 @@ class MainActivity : AppCompatActivity(), Contract.View {
         recyclerView = detail
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        disposable = getData() // local vs remote
+        leftArrow.setOnClickListener {
+            showAlertDialog("arrow")
+        }
+        copy.setOnClickListener {
+            copyText()
+        }
+
+        disposable = presenter.getTrackingData()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe (
                 {
-                    val bindingData = ViewModel.BindingData(
+                    val bindingData = TrackingData(
+                        it.parcelCompanyCode,
                         it.parcelCompanyName,
                         it.parcelInvoice,
                         it.parcelLevel,
                         it.parcelDeliverTime,
+                        it.purchaseItemImg,
                         it.purchaseItemName,
+                        it.purchaseItemDate,
                         it.trackingDetail
                     )
 
                     Glide.with(this).load(it.purchaseItemImg).into(parcelImg) // Glide -> 이미지 표시
 
-                    viewModel = ViewModel(this, bindingData)
+                    viewModel = ViewModel(bindingData)
                     binding.data = bindingData
                     binding.viewModel = viewModel
 
@@ -63,22 +77,22 @@ class MainActivity : AppCompatActivity(), Contract.View {
                 },
                 {
                     it.printStackTrace()
-                    showAlertDialog(it.message!!)
+                    showAlertDialog("network")// 네트워크 연결 에러
                 }
             )
     }
 
-    private fun getData(): Single<TrackingData>?{
-        val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val info = manager.activeNetworkInfo?.type
-
-        return if (info == ConnectivityManager.TYPE_WIFI || info == ConnectivityManager.TYPE_MOBILE){ // 네트워크 연결 체크
-            presenter.getDataFromRemote()
-        } else{
-            showAlertDialog("network")
-            presenter.getDataFromLocal()
-        }
-    }
+//    private fun getData(): Single<TrackingData>?{
+//        val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//        val info = manager.activeNetworkInfo?.type
+//
+//        return if (info == ConnectivityManager.TYPE_WIFI || info == ConnectivityManager.TYPE_MOBILE){ // 네트워크 연결 체크
+//            presenter.getDataFromRemote()
+//        } else{
+//            showAlertDialog("network")
+//            presenter.getDataFromLocal()
+//        }
+//    }
 
     private fun setAdapter(data: List<TrackingData.Detail>){
         val adapter = TrackingAdapter(data)
@@ -88,19 +102,33 @@ class MainActivity : AppCompatActivity(), Contract.View {
     private fun showAlertDialog(s: String) {
         val dialog = AlertDialog.Builder(this)
 
-        if (s == "network"){
-            dialog.setTitle("네트워크 연결 실패")
-                .setMessage("\n기존 데이터를 가져옵니다")
-                .setPositiveButton("확인") { _: DialogInterface?, _: Int -> }
+        if (s == "arrow"){
+            dialog.setTitle("앱 종료")
+                .setPositiveButton("확인") { _: DialogInterface?, _: Int -> finish() }
+                .setNegativeButton("취소") { _: DialogInterface?, _: Int ->  }
                 .create()
                 .show()
         }
         else{
-            dialog.setMessage(s)
+            dialog.setTitle("네트워크 연결 실패")
+                .setMessage("\n데이터를 불러올 수 없음")
                 .setPositiveButton("확인") { _: DialogInterface?, _: Int -> finish() }
                 .create()
                 .show()
         }
+    }
+
+    private fun copyText(){
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip: ClipData = ClipData.newPlainText("Invoice", binding.invoice.text)
+        clipboard.setPrimaryClip(clip)
+
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle("클립보드 복사 완료")
+            .setMessage("\n${clip.getItemAt(0).text}")
+            .setPositiveButton("확인") { _: DialogInterface?, _: Int ->  }
+            .create()
+            .show()
     }
 
     override fun getContext(): Context = this
