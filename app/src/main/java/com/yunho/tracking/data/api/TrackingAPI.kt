@@ -2,20 +2,33 @@ package com.yunho.tracking.data.api
 
 import com.yunho.tracking.data.model.TrackingDataEntity
 import io.reactivex.Single
+import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import java.util.concurrent.TimeUnit
 
 class TrackingAPI {
 
     private val url = "http://img.sweettracker.net/image/mobile_test/"
     private var retrofit: Retrofit
+    private var okHttpClient: OkHttpClient
     var api: API
 
-    init { // 인스턴스 생성 시 가장 먼저 호출, 기본생성자 호출 시 바로 실행
+    init { // 인스턴스 생성 시 호출, 주생성자->init 순서
+
+        // 타임아웃 시간 지정 -> 지정시간 내 동작 실패 시 요청 실패 처리
+        // 기본값은 10초
+        okHttpClient = OkHttpClient.Builder()
+                            .connectTimeout(5, TimeUnit.SECONDS) // 서버연결
+                            .readTimeout(5, TimeUnit.SECONDS) // 읽기
+                            .writeTimeout(5, TimeUnit.SECONDS) // 쓰기
+                            .build()
+
         retrofit = Retrofit.Builder()
+                    .client(okHttpClient)
                     .baseUrl(url)
                     .addConverterFactory(GsonConverterFactory.create()) // 서버로부터 데이터를 받고 원하는 타입으로 바꾸기 위해
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // RxJava와 함께 사용 시 필수, Observable형태로 바꿔줌
