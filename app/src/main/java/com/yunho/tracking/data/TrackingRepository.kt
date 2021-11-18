@@ -10,7 +10,6 @@ import com.yunho.tracking.domain.Repository
 import com.yunho.tracking.data.model.TrackingDataEntity
 import com.yunho.tracking.domain.model.TrackingData
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 
 class TrackingRepository(private val context: Context): Repository { // context ???
     private lateinit var db: DAO

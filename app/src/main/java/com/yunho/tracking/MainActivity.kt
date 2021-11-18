@@ -131,8 +131,6 @@ class MainActivity : AppCompatActivity(), Contract.View {
             .show()
     }
 
-    override fun getContext(): Context = this
-
     override fun onDestroy() {
         super.onDestroy()
 
