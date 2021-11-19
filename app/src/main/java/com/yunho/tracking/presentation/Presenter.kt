@@ -7,7 +7,9 @@ import com.yunho.tracking.domain.UseCase
 import com.yunho.tracking.domain.model.TrackingData
 import io.reactivex.Single
 
-class Presenter(private val context: Context, private val repo: Repository = TrackingRepository(context)): Contract.Presenter{ // context ???
+class Presenter(private val context: Context, private val repo: Repository = TrackingRepository(context)): Contract.Presenter{
+    // context ???
+    // repo ???
 
     override fun getTrackingData(): Single<TrackingData>? {
         return UseCase(repo).getTrackingData()

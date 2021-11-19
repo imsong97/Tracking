@@ -55,5 +55,9 @@ class TrackingAPI {
     interface API{
         @GET("mobile.json")
         fun getTrackingData(): Single<Response<TrackingDataEntity>>
+        /*
+        * Observable: 0~여러개 데이터 발행
+        * Single: 항상 1개의 데이터 또는 error 통지
+        * */
     }
 }

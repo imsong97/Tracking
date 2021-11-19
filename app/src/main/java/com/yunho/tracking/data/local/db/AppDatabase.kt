@@ -13,6 +13,7 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun userDao(): DAO
 
     companion object {
+        @Volatile
         private var instance: AppDatabase? = null
 
         @Synchronized

@@ -11,7 +11,7 @@ class GetLocalRepository: LocalDataSource {
         return Single.create { // RoomDB는 UI 스레드에서 접근 불가능 -> io 스레드에서 동작하도록
             val db = AppDatabase.getInstance(context)?.userDao()
             val data = db?.getAll()
-            if (data != null){
+            if (data != null){ // ???
                 it.onSuccess(data)
             }
             else{

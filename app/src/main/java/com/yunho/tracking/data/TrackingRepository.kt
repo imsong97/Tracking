@@ -19,7 +19,7 @@ class TrackingRepository(private val context: Context): Repository { // context 
     override fun getTrackingData(): Single<TrackingData>?{
         return local.getTrackingData(context)
             ?.onErrorResumeNext { // onErrorResumeNext -> 에러 발생 시 원하는 Observable로 대체
-                remote.getTrackingData() // Local실패 시 Remote에서 데이터 가져옴
+                remote.getTrackingData() // Local실패 시 Remote 요청
             }
             ?.flatMap {
                 insertData(it)

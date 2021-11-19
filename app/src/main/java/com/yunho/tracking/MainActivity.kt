@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity(), Contract.View {
 
     /*
     * ?: null이 될 수 있음을 명시적으로 표현
-    * lateinit: null로 선언할 필요 없을 경우 / val 사용 불가능 / Int, Boolean, Double 등의 기본적인 타입에 적용 불가능 / .isInitialized 로 초기화 체크 가능
-    * lazy{}: null로 선언할 필요 없을 경우 / var 사용 불가능 / 블록 안에서 필요한 코드 작성, 이후 .start()로 호출(초기화)
+    * lateinit: null로 선언할 필요 없을 경우 / var 사용 / Int, Boolean, Double 등의 기본적인 타입에 적용 불가능
+    * by lazy{}: null로 선언할 필요 없을 경우 / val 사용 / 블록 안에서 필요한 코드 작성 -> 선언+초기화 코드
     * */
     private lateinit var presenter: Presenter
     private lateinit var binding: ActivityMainBinding
@@ -82,18 +82,6 @@ class MainActivity : AppCompatActivity(), Contract.View {
             )
     }
 
-//    private fun getData(): Single<TrackingData>?{
-//        val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-//        val info = manager.activeNetworkInfo?.type
-//
-//        return if (info == ConnectivityManager.TYPE_WIFI || info == ConnectivityManager.TYPE_MOBILE){ // 네트워크 연결 체크
-//            presenter.getDataFromRemote()
-//        } else{
-//            showAlertDialog("network")
-//            presenter.getDataFromLocal()
-//        }
-//    }
-
     private fun setAdapter(data: List<TrackingData.Detail>){
         val adapter = TrackingAdapter(data)
         recyclerView.adapter = adapter
@@ -138,4 +126,16 @@ class MainActivity : AppCompatActivity(), Contract.View {
             disposable!!.dispose()
         }
     }
+
+//    private fun getData(): Single<TrackingData>?{
+//        val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//        val info = manager.activeNetworkInfo?.type
+//
+//        return if (info == ConnectivityManager.TYPE_WIFI || info == ConnectivityManager.TYPE_MOBILE){ // 네트워크 연결 체크
+//            presenter.getDataFromRemote()
+//        } else{
+//            showAlertDialog("network")
+//            presenter.getDataFromLocal()
+//        }
+//    }
 }
