@@ -15,7 +15,7 @@ import com.yunho.tracking.databinding.ActivityMainBinding
 import com.yunho.tracking.domain.model.TrackingData
 import com.yunho.tracking.presentation.Contract
 import com.yunho.tracking.presentation.Presenter
-import com.yunho.tracking.domain.ViewModel
+import com.yunho.tracking.presentation.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

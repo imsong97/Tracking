@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.yunho.tracking.domain.ViewModel" />
+            type="com.yunho.tracking.presentation.ViewModel" />
         <variable
             name="data"
             type="com.yunho.tracking.domain.model.TrackingData" />

@@ -1,4 +1,4 @@
-package com.yunho.tracking.domain
+package com.yunho.tracking.presentation
 
 import com.yunho.tracking.domain.model.TrackingData
 import java.text.SimpleDateFormat
