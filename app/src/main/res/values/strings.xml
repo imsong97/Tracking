@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Tracking</string>
+    <string name="commit">확인</string>
+    <string name="cancel">취소</string>
+    <string name="close_app">앱 종료</string>
+    <string name="title_copy">클립보드 복사 완료</string>
+    <string name="base_error">목록을 불러오는중에 문제가 발생했습니다.\n잠시 후 다시 시도하세요.</string>
+    <string name="text_cs_center">택배사 고객센터 연결</string>
+    <string name="text_description">본 정보는 각 택배사의 전산처리 시점에 따라\n실제 상황과 차이가 발생할 수 있음을 알려드립니다.\n택배에 대한 문의는 택배사 고객센터를 이용해주세요.</string>
+    <string name="text_title">배송조회</string>
+    <string name="txt_company">택배사</string>
+    <string name="txt_invoice">운송장번호</string>
+    <string name="txt_more">더보기</string>
+    <string name="txt_tracking_detail">배송상세</string>
+    <string name="txt_review">택배리뷰</string>
 </resources>

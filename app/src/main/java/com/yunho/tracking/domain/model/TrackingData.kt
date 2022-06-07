@@ -1,6 +1,5 @@
 package com.yunho.tracking.domain.model
 
-
 data class TrackingData(
     var parcelCompanyCode: String? = null,
     var parcelCompanyName: String? = null,

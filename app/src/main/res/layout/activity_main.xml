@@ -7,13 +7,6 @@
         <variable
             name="viewModel"
             type="com.yunho.tracking.presentation.ViewModel" />
-        <variable
-            name="data"
-            type="com.yunho.tracking.domain.model.TrackingData" />
-        <variable
-            name="view"
-            type="com.yunho.tracking.MainActivity" />
-
     </data>
 
     <LinearLayout
@@ -38,7 +31,7 @@
                 android:layout_width="74dp"
                 android:layout_height="24dp"
                 android:layout_margin="16dp"
-                android:text="배송조회"
+                android:text="@string/text_title"
                 android:autoSizeTextType="uniform"
                 android:textColor="#ffffff"/>
 
@@ -51,7 +44,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:src="@mipmap/ic_more"/>
 
         </LinearLayout>
@@ -73,7 +66,7 @@
                     android:textSize="30sp"
                     android:textColor="#212121"
                     android:textStyle="normal"
-                    android:text="@{viewModel.getStatusText()}"/>
+                    android:text="@{viewModel.statusText}"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,7 +74,7 @@
                     android:textStyle="normal"
                     android:textSize="12sp"
                     android:textColor="#757575"
-                    android:text="@{viewModel.getTimeText()}"/>
+                    android:text="@{viewModel.timeText}"/>
                 <ProgressBar
                     android:layout_width="match_parent"
                     android:layout_height="4dp"
@@ -119,7 +112,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/itemName"
-                                android:text="@{data.purchaseItemName}"
+                                android:text="@{viewModel.itemName}"
                                 android:textStyle="normal"
                                 android:textSize="16sp"
                                 android:textColor="#212121"/>
@@ -128,7 +121,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="18dp"
                                 android:id="@+id/regDate"
-                                android:text="@{viewModel.getRegDateText()}"
+                                android:text="@{viewModel.regDateText}"
                                 android:textStyle="normal"
                                 android:textSize="12sp"
                                 android:textColor="#aaaaaa"/>
@@ -154,16 +147,16 @@
                         android:textStyle="normal"
                         android:textSize="12sp"
                         android:textColor="#aaaaaa"
-                        android:text="택배사"/>
+                        android:text="@string/txt_company"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
+                        android:layout_marginStart="60dp"
                         android:textStyle="normal"
                         android:textSize="14sp"
                         android:textColor="#212121"
                         android:id="@+id/companyName"
-                        android:text="@{data.parcelCompanyName}"/>
+                        android:text="@{viewModel.companyName}"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -180,21 +173,21 @@
                         android:textStyle="normal"
                         android:textSize="12sp"
                         android:textColor="#aaaaaa"
-                        android:text="운송장번호"/>
+                        android:text="@string/txt_invoice"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="38dp"
+                        android:layout_marginStart="38dp"
                         android:textStyle="normal"
                         android:textSize="14sp"
                         android:textColor="#212121"
                         android:id="@+id/invoice"
-                        android:text="@{data.parcelInvoice}"/>
+                        android:text="@{viewModel.invoice}"/>
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginStart="6dp"
                         android:id="@+id/copy"
                         android:src="@mipmap/ic_copy"
                         android:scaleType="fitCenter"/>
@@ -209,7 +202,7 @@
                         android:textStyle="normal"
                         android:textSize="14sp"
                         android:textColor="#03a9f4"
-                        android:text="더보기"/>
+                        android:text="@string/txt_more"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -224,10 +217,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="9dp"
-                        android:text="배송상세"
+                        android:text="@string/txt_tracking_detail"
                         android:textStyle="normal"
                         android:textSize="16sp"
                         android:textColor="#212121"/>
@@ -239,9 +232,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginBottom="9dp"
-                        android:text="택배리뷰"
+                        android:text="@string/txt_review"
                         android:textStyle="normal"
                         android:textSize="14sp"
                         android:textColor="#03a9f4"/>
@@ -271,7 +264,7 @@
                     android:layout_marginBottom="16dp"
                     android:textStyle="normal"
                     android:textSize="10sp"
-                    android:text="본 정보는 각 택배사의 전산처리 시점에 따라\n실제 상황과 차이가 발생할 수 있음을 알려드립니다.\n택배에 대한 문의는 택배사 고객센터를 이용해주세요."
+                    android:text="@string/text_description"
                     android:textColor="#757575"/>
 
                 <TextView
@@ -280,8 +273,7 @@
                     android:layout_marginBottom="30dp"
                     android:background="#03a9f4"
                     android:gravity="center"
-                    android:text="택배사 고객센터 연결"/>
-
+                    android:text="@string/text_cs_center"/>
 
             </LinearLayout>
         </ScrollView>

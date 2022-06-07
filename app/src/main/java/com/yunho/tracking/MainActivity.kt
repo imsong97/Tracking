@@ -7,10 +7,12 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.yunho.tracking.databinding.ActivityMainBinding
 import com.yunho.tracking.domain.model.TrackingData
 import com.yunho.tracking.presentation.Contract
@@ -28,82 +30,62 @@ class MainActivity : AppCompatActivity(), Contract.View {
     * lateinit: null로 선언할 필요 없을 경우 / var 사용 / Int, Boolean, Double 등의 기본적인 타입에 적용 불가능
     * by lazy{}: null로 선언할 필요 없을 경우 / val 사용 / 블록 안에서 필요한 코드 작성 -> 선언+초기화 코드
     * */
-    private lateinit var presenter: Presenter
+    private lateinit var presenter: Contract.Presenter
     private lateinit var binding: ActivityMainBinding
-    private var disposable: Disposable? = null
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: ViewModel
+
+    enum class DialogType {
+        ERROR, FINISH
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        presenter = Presenter(this)
+        presenter = Presenter(this, this)
 
-        recyclerView = detail
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.leftArrow.setOnClickListener(listener)
+        binding.copy.setOnClickListener(listener)
 
-        leftArrow.setOnClickListener {
-            showAlertDialog("arrow")
+        presenter.getTrackingData()
+    }
+
+    private val listener = View.OnClickListener {
+        when(it.id) {
+            R.id.leftArrow -> initDialog(DialogType.FINISH)
+            R.id.copy -> copyText()
         }
-        copy.setOnClickListener {
-            copyText()
-        }
+    }
 
-        disposable = presenter.getTrackingData()
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe (
-                {
-                    val bindingData = TrackingData(
-                        it.parcelCompanyCode,
-                        it.parcelCompanyName,
-                        it.parcelInvoice,
-                        it.parcelLevel,
-                        it.parcelDeliverTime,
-                        it.purchaseItemImg,
-                        it.purchaseItemName,
-                        it.purchaseItemDate,
-                        it.trackingDetail
-                    )
+    override fun setAdapter(data: List<TrackingData.Detail>){
+        binding.detail.layoutManager = LinearLayoutManager(this)
+        binding.detail.adapter = TrackingAdapter(data)
+    }
 
-                    Glide.with(this).load(it.purchaseItemImg).into(parcelImg) // Glide -> 이미지 표시
+    override fun setImg(url: String) {
+        Glide.with(this)
+            .load(url)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(binding.parcelImg) // Glide -> 이미지 표시
+    }
 
-                    viewModel = ViewModel(bindingData)
-                    binding.data = bindingData
-                    binding.viewModel = viewModel
+    override fun setViewModel(data: TrackingData) {
+        binding.viewModel = ViewModel(data)
+    }
 
-                    setAdapter(it.trackingDetail!!)
-                },
-                {
-                    it.printStackTrace()
-                    showAlertDialog("network")// 네트워크 연결 에러
+    override fun initDialog(type: DialogType) {
+        val dialog = AlertDialog.Builder(this).run {
+            this.setPositiveButton(getString(R.string.commit)) { _, _ -> finish() }
+            when(type) {
+                DialogType.ERROR -> this.setMessage(getString(R.string.base_error))
+                DialogType.FINISH -> {
+                    this.setTitle(getString(R.string.close_app))
+                        .setNegativeButton(getString(R.string.cancel)) { _, _ ->  }
                 }
-            )
-    }
-
-    private fun setAdapter(data: List<TrackingData.Detail>){
-        val adapter = TrackingAdapter(data)
-        recyclerView.adapter = adapter
-    }
-
-    private fun showAlertDialog(s: String) {
-        val dialog = AlertDialog.Builder(this)
-
-        if (s == "arrow"){
-            dialog.setTitle("앱 종료")
-                .setPositiveButton("확인") { _: DialogInterface?, _: Int -> finish() }
-                .setNegativeButton("취소") { _: DialogInterface?, _: Int ->  }
-                .create()
-                .show()
+            }
+            this
         }
-        else{
-            dialog.setTitle("네트워크 연결 실패")
-                .setMessage("\n데이터를 불러올 수 없음")
-                .setPositiveButton("확인") { _: DialogInterface?, _: Int -> finish() }
-                .create()
-                .show()
-        }
+
+        dialog.show()
     }
 
     private fun copyText(){
@@ -111,20 +93,16 @@ class MainActivity : AppCompatActivity(), Contract.View {
         val clip: ClipData = ClipData.newPlainText("Invoice", binding.invoice.text)
         clipboard.setPrimaryClip(clip)
 
-        val dialog = AlertDialog.Builder(this)
-        dialog.setTitle("클립보드 복사 완료")
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.title_copy))
             .setMessage("\n${clip.getItemAt(0).text}")
-            .setPositiveButton("확인") { _: DialogInterface?, _: Int ->  }
-            .create()
+            .setPositiveButton(getString(R.string.commit)) { _, _ -> }
             .show()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
-        if (disposable!= null && !disposable!!.isDisposed){
-            disposable!!.dispose()
-        }
+        presenter.dispose()
     }
 
 //    private fun getData(): Single<TrackingData>?{
